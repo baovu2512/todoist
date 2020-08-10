@@ -10,7 +10,7 @@ import java.time.Duration;
 
 public class AbstractPage extends BaseApi{
 
-    public AppiumDriver driver;
+    private AppiumDriver driver;
 
     public AbstractPage() {
         this.driver = DriverManager.getDriver();

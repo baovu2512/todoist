@@ -1,5 +1,6 @@
 package api.core;
 
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
@@ -9,9 +10,15 @@ public class BaseApi {
 
     private static Response response;
 
+    public BaseApi() {
+        RestAssured.baseURI = "https://api.todoist.com/rest/v1";
+    }
+
     public static Response getResponse() {
         return response;
     }
+
+
 
     /**
      * send POST by object
