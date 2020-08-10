@@ -12,8 +12,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class TestConfig {
-    private final static ObjectMapper MAPPER = new ObjectMapper();
-
     public final static String CONFIG_PATH =
             Paths.get(Paths.get("").toAbsolutePath().toString(), "src", "test", "resources", "configs")
                     .toString();
@@ -22,7 +20,7 @@ public class TestConfig {
                     .toString();
     public final static Path TARGET_PATH =
             Paths.get(Paths.get("").toAbsolutePath().toString(), "target");
-
+    private final static ObjectMapper MAPPER = new ObjectMapper();
 
     public static User getUserConfig() throws IOException {
         // read json

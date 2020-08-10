@@ -19,8 +19,9 @@ public class DriverManager {
     private final static String APP_PATH =
             Paths.get(Paths.get("").toAbsolutePath().toString(), "src", "test", "resources", "build",
                     "android", "com.todoist_15.0.4-6030_minAPI21(nodpi)_apkmirror.com.apk").toString();
-    public static ThreadLocal<AppiumDriver> driver = new ThreadLocal<>();
     private static final String workingDir = System.getProperty("user.dir");
+    public static ThreadLocal<AppiumDriver> driver = new ThreadLocal<>();
+    private AppiumDriverLocalService service;
 
     public static AppiumDriver getDriver() {
         return driver.get();
@@ -33,7 +34,7 @@ public class DriverManager {
     public void startAppiumService() {
         try {
             // Build the Appium service
-            AppiumServiceBuilder builder = new AppiumServiceBuilder().withIPAddress("0.0.0.0")
+            AppiumServiceBuilder builder = new AppiumServiceBuilder().withIPAddress("127.0.0.1")
                     .usingAnyFreePort().withArgument(GeneralServerFlag.SESSION_OVERRIDE);
 
             //set appium service
@@ -54,8 +55,6 @@ public class DriverManager {
     public void setService(AppiumDriverLocalService service) {
         this.service = service;
     }
-
-    private AppiumDriverLocalService service;
 
     public void initialiseDriver(String platform) throws Exception {
         switch (platform) {
