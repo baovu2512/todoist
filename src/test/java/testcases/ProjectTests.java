@@ -1,11 +1,11 @@
 package testcases;
 
+
 import api.models.Project;
 import api.models.Task;
 import api.request.ProjectsApi;
 import api.request.TasksApi;
 import core.AbstractTest;
-import mobile.core.DriverManager;
 import mobile.core.PageFactoryManager;
 import mobile.pageobjects.HomePage;
 import mobile.pageobjects.LoginPage;
@@ -13,33 +13,36 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import reportconfig.ExtentTestManager;
 import testdata.TestDataProvider;
 
+import java.lang.reflect.Method;
+
 public class ProjectTests extends AbstractTest {
-    DriverManager driverManager = new DriverManager();
     ProjectsApi projectsApi = new ProjectsApi();
     TasksApi tasksApi = new TasksApi();
     HomePage homePage;
     LoginPage loginPage;
 
     @BeforeMethod
-    public void before_test(Object[] args) throws Exception {
+    public void before_test(Object[] args) {
         String projectName = (String) args[3];
         projectsApi.createProjectByApi(projectName);
-        driverManager.startAppiumService();
-        driverManager.initialiseDriver("ANDROID");
         homePage = PageFactoryManager.getHomePage();
         loginPage = PageFactoryManager.getLoginPage();
     }
 
     @Test(dataProvider = "CreateProject", dataProviderClass = TestDataProvider.class)
-    public void create_project(String username, String email, String password, String projectName) {
+    public void create_project(String username, String email, String password, String projectName, Method method) {
+        ExtentTestManager.startTest(method.getName(), method.getName());
+//        Login into mobile application.
         loginPage.clickWelComeContinueWithEmail()
                 .enterEmail(email)
                 .clickContinueWithEmail()
                 .enterPassword(password)
-                .clickToBtnLogin()
-                .navigateToHomePage()
+                .clickToBtnLogin();
+
+        homePage = loginPage.navigateToHomePage()
                 .verifyHomePageDisplayed(username)
                 .clickExpand()
                 .verifyProjectDisplayed(projectName)
@@ -48,8 +51,8 @@ public class ProjectTests extends AbstractTest {
 
     @Test(dataProvider = "CreateTaskViaMobilePhone", dataProviderClass = TestDataProvider.class)
     public void create_project_via_mobile(String username, String email, String password,
-                                          String projectName, String taskContent) throws InterruptedException {
-
+                                          String projectName, String taskContent, Method method) throws InterruptedException {
+        ExtentTestManager.startTest(method.getName(), method.getName());
         loginPage.clickWelComeContinueWithEmail()
                 .enterEmail(email)
                 .clickContinueWithEmail()
@@ -69,6 +72,7 @@ public class ProjectTests extends AbstractTest {
         Project currentPrj = projectsApi.andFilterProjectByName(projectName);
         String projectId = String.valueOf(currentPrj.getId());
         //save task
+        homePage.waitFor(3);
         tasksApi.getAllActiveTask().saveTaskList();
         Task task = tasksApi.andFilterTaskByProjectIdAndContent(projectId, taskContent);
         Assert.assertEquals(projectId, task.getProject_id());
@@ -76,8 +80,8 @@ public class ProjectTests extends AbstractTest {
     }
 
     @Test(dataProvider = "CreateTaskViaMobilePhone", dataProviderClass = TestDataProvider.class)
-    public void reopen_task(String username, String email, String password, String projectName, String taskContent) throws InterruptedException {
-
+    public void reopen_task(String username, String email, String password, String projectName, String taskContent, Method method) throws InterruptedException {
+        ExtentTestManager.startTest(method.getName(), method.getName());
         loginPage = PageFactoryManager.getLoginPage();
         loginPage.clickWelComeContinueWithEmail()
                 .enterEmail(email)
@@ -99,11 +103,12 @@ public class ProjectTests extends AbstractTest {
         projectsApi.getAllProjectApi().saveProjectsList();
         Project currentPrj = projectsApi.andFilterProjectByName(projectName);
         String projectId = String.valueOf(currentPrj.getId());
+        homePage.waitFor(3);
         tasksApi.getAllActiveTask().saveTaskList();
         Task task = tasksApi.andFilterTaskByProjectIdAndContent(projectId, taskContent);
 
         homePage.clickToCompleteTask(taskContent);
-        tasksApi.reOpenTaskById(String.valueOf(task.getId())).validateStatusCode(200);
+        tasksApi.reOpenTaskById(String.valueOf(task.getId()));
 
         homePage.waitFor(3);
 
@@ -112,8 +117,7 @@ public class ProjectTests extends AbstractTest {
     }
 
     @AfterMethod
-    public void dispose() {
-        driverManager.getService().stop();
+    public void clear_all_project() {
         projectsApi.deleteAllProject();
     }
 }
