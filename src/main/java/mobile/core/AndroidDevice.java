@@ -6,6 +6,15 @@ public class AndroidDevice {
     private String platformVersion;
     private int port;
 
+    public boolean getReal() {
+        return isReal;
+    }
+
+    public void setReal(boolean real) {
+        isReal = real;
+    }
+
+    private boolean isReal;
     public AndroidDevice() {
 
     }

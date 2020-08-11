@@ -49,7 +49,7 @@ public class TestConfig {
         device.setSystemPort(deviceNode.get("systemPort").asInt());
         device.setPlatformVersion(deviceNode.get("platformVersion").asText());
         device.setPort(deviceNode.get("port").asInt());
-
+        device.setReal(deviceNode.get("isReal").asBoolean());
         return device;
     }
 }

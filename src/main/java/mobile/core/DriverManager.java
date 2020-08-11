@@ -80,7 +80,9 @@ public class DriverManager {
         cap.setCapability(MobileCapabilityType.PLATFORM_VERSION, device.getPlatformVersion());
         cap.setCapability(MobileCapabilityType.DEVICE_NAME, device.getUdid());
         cap.setCapability(MobileCapabilityType.APP, APP_PATH);
-        cap.setCapability("avd", device.getUdid());
+        if(!device.getReal()){
+            cap.setCapability("avd", device.getUdid());
+        }
         cap.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, true);
         cap.setCapability("systemPort", device.getSystemPort());
         cap.setCapability("appPackage", "com.todoist");
