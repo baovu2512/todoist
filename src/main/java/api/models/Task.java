@@ -2,7 +2,7 @@ package api.models;
 
 public class Task {
     private Long id;
-    private String projectId;
+    private String project_id;
     private String sectionId;
     private String content;
     private boolean isCompleted;
@@ -22,12 +22,12 @@ public class Task {
         this.id = id;
     }
 
-    public String getProjectId() {
-        return projectId;
+    public String getProject_id() {
+        return project_id;
     }
 
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
+    public void setProject_id(String project_id) {
+        this.project_id = project_id;
     }
 
     public String getSectionId() {

@@ -33,28 +33,31 @@ public class ProjectsApi extends BaseApi {
         return this;
     }
 
-    public ProjectsApi getAllProjectApi(){
+    public ProjectsApi getAllProjectApi() {
         sendGet(Endpoints.PROJECT_API);
         return this;
     }
 
-    public ProjectsApi saveProjectsList(){
-        setProjectList(MappingUtils.parseJsonToModelList(getJsonAsString(),Project[].class));
+    public ProjectsApi saveProjectsList() {
+        System.out.println(getJsonAsString());
+        setProjectList(MappingUtils.parseJsonToModelList(getJsonAsString(), Project[].class));
         return this;
     }
 
-    public Project andFilterProjectByName(String name){
+    public Project andFilterProjectByName(String name) {
         for (Project prj :
                 getProjectList()) {
-            if (prj.getName().equals(name))return prj;
+            if (prj.getName().equals(name)) return prj;
         }
         return null;
     }
-    public ProjectsApi deleteProjectById(String projectId){
-        sendDelete(Endpoints.PROJECT_API+"/"+projectId);
+
+    public ProjectsApi deleteProjectById(String projectId) {
+        sendDelete(Endpoints.PROJECT_API + "/" + projectId);
         return this;
     }
-    public void deleteAllProject(){
+
+    public void deleteAllProject() {
         getAllProjectApi().saveProjectsList();
         for (Project prj :
                 getProjectList()) {

@@ -34,7 +34,7 @@ public class DriverManager {
     public void startAppiumService() {
         try {
             // Build the Appium service
-            AppiumServiceBuilder builder = new AppiumServiceBuilder().withIPAddress("127.0.0.1")
+            AppiumServiceBuilder builder = new AppiumServiceBuilder().withIPAddress("0.0.0.0")
                     .usingAnyFreePort().withArgument(GeneralServerFlag.SESSION_OVERRIDE);
 
             //set appium service

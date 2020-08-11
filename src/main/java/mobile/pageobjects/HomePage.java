@@ -6,6 +6,7 @@ import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import mobile.core.AbstractPage;
 import mobile.core.DriverManager;
+import org.testng.Assert;
 
 public class HomePage extends AbstractPage {
 
@@ -18,6 +19,7 @@ public class HomePage extends AbstractPage {
     private String curView = "//android.widget.ImageButton[@content-desc=\"Change the current view\"]//following-sibling::android.widget.TextView[@text='%s']";
     private String navProject =  "//android.widget.RelativeLayout[.//*[@resource-id='com.todoist:id/name' and @text='Projects']]/following-sibling::*[./*[@text='%s']]";
     private String taskInfo = "//*[@resource-id='com.todoist:id/text' and @text='%s']/following-sibling::  android.widget.TextView[@resource-id='com.todoist:id/project' and @text='%s']";
+    private String taskInfoInProject = "//*[@resource-id='com.todoist:id/text' and @text='%s']";
     @AndroidFindBy(id = "com.todoist:id/fab")
     private MobileElement addBtn;
 
@@ -25,6 +27,7 @@ public class HomePage extends AbstractPage {
     private MobileElement taskContent;
 
     private String completeTask = "//*[@resource-id='com.todoist:id/text' and @text='%s']/preceding-sibling::android.widget.CheckBox";
+
     public HomePage verifyHomePageDisplayed(String username) {
         waitForElementTextVisible(profileName,username);
         return this;
@@ -46,11 +49,12 @@ public class HomePage extends AbstractPage {
     }
 
     public HomePage verifyCurrentView(String projectName){
-        isControlDisplayed(MobileBy.xpath(String.format(curView,projectName)));
+        Assert.assertTrue(isControlDisplayed(MobileBy.xpath(String.format(curView,projectName))));
         return this;
     }
 
-    public HomePage clickAddBtn(){
+    public HomePage clickAddBtn() throws InterruptedException {
+        waitFor(3);
         clickOnElement(addBtn);
         return this;
     }
@@ -69,8 +73,18 @@ public class HomePage extends AbstractPage {
         return this;
     }
 
-    public HomePage verifyTaskCreated(String projectName , String taskContent){
+    public HomePage verifyTaskOnView(String projectName , String taskContent){
         isControlDisplayed(MobileBy.xpath(String.format(taskInfo,taskContent,projectName)));
+        return this;
+    }
+
+    public HomePage verifyTaskOnView( String taskContent){
+        isControlDisplayed(MobileBy.xpath(String.format(taskInfoInProject,taskContent)));
+        return this;
+    }
+
+    public HomePage clickToCompleteTask(String taskName){
+        clickOnElement(MobileBy.xpath(String.format(completeTask,taskName)));
         return this;
     }
 
