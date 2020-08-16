@@ -16,6 +16,7 @@ import org.testng.annotations.Test;
 import reportconfig.ExtentTestManager;
 import testdata.TestDataProvider;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 
 public class ProjectTests extends AbstractTest {
@@ -33,7 +34,7 @@ public class ProjectTests extends AbstractTest {
     }
 
     @Test(dataProvider = "CreateProject", dataProviderClass = TestDataProvider.class)
-    public void create_project(String username, String email, String password, String projectName, Method method) {
+    public void create_project(String username, String email, String password, String projectName, Method method) throws IOException {
         ExtentTestManager.startTest(method.getName(), method.getName());
 //        Login into mobile application.
         loginPage.clickWelComeContinueWithEmail()
@@ -43,7 +44,8 @@ public class ProjectTests extends AbstractTest {
                 .clickToBtnLogin();
 
         homePage = loginPage.navigateToHomePage()
-                .verifyHomePageDisplayed(username)
+                .verifyHomePageDisplayed()
+                .clickToOpenNavigator()
                 .clickExpand()
                 .verifyProjectDisplayed(projectName)
                 .clickOnProject(projectName);
@@ -60,12 +62,14 @@ public class ProjectTests extends AbstractTest {
                 .clickToBtnLogin();
 
         homePage = loginPage.navigateToHomePage();
-        homePage.clickExpand()
+        homePage.verifyHomePageDisplayed()
+                .clickToOpenNavigator()
+                .clickExpand()
                 .clickOnProject(projectName)
                 .clickAddBtn()
                 .enterTaskContent(projectName, taskContent)
-                .submitTask()
-                .verifyTaskOnView(taskContent);
+                .submitTask();
+        Assert.assertTrue(homePage.verifyTaskOnView(taskContent));
 
         homePage.waitFor(3);
         projectsApi.getAllProjectApi().saveProjectsList();
@@ -90,7 +94,8 @@ public class ProjectTests extends AbstractTest {
                 .clickToBtnLogin();
 
         homePage = loginPage.navigateToHomePage()
-                .verifyHomePageDisplayed(username)
+                .verifyHomePageDisplayed()
+                .clickToOpenNavigator()
                 .clickExpand()
                 .verifyProjectDisplayed(projectName)
                 .clickOnProject(projectName)
@@ -113,7 +118,7 @@ public class ProjectTests extends AbstractTest {
         homePage.waitFor(3);
 
         homePage.swipeDown(20, 80);
-        homePage.verifyTaskOnView(taskContent);
+        Assert.assertTrue(homePage.verifyTaskOnView(taskContent));
     }
 
     @AfterMethod

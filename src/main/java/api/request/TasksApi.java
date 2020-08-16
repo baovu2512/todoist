@@ -2,7 +2,7 @@ package api.request;
 
 import api.core.BaseApi;
 import api.models.Task;
-import commons.MappingUtils;
+import utils.MappingUtils;
 import commons.constants.Endpoints;
 
 import java.util.List;

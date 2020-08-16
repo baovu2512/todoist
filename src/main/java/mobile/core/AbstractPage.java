@@ -15,6 +15,7 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.Log;
 
 import java.time.Duration;
 
@@ -30,8 +31,11 @@ public class AbstractPage {
     public void clickOnElement(MobileElement element) {
         element = waitForElementVisible(element);
         try {
+            Log.info("Click to element :" + element.toString());
             element.click();
         } catch (StaleElementReferenceException stale) {
+            Log.info("================================== Stale Element Reference Exception===================================");
+            Log.info(stale.getMessage());
             waitForElementVisible(element).click();
         }
     }
@@ -39,8 +43,11 @@ public class AbstractPage {
     public void clickOnElement(By by) {
         MobileElement element = waitForElementVisible(by);
         try {
+            Log.info("Click to element :" + by.toString());
             element.click();
         } catch (StaleElementReferenceException stale) {
+            Log.info("================================== Stale Element Reference Exception===================================");
+            Log.info(stale.getMessage());
             waitForElementVisible(by).click();
         }
     }
@@ -48,8 +55,11 @@ public class AbstractPage {
     public void sendKeysToElement(MobileElement element, String keyToSend) {
         MobileElement el = waitForElementVisible(element);
         try {
+            Log.info("Sendkey to element :" + element.toString());
             el.sendKeys(keyToSend);
         } catch (StaleElementReferenceException stale) {
+            Log.info("================================== Stale Element Reference Exception===================================");
+            Log.info(stale.getMessage());
             waitForElementVisible(element).sendKeys(keyToSend);
         }
     }

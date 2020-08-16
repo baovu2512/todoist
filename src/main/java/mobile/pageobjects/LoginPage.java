@@ -10,7 +10,7 @@ public class LoginPage extends AbstractPage {
     @AndroidFindBy(id = "com.todoist:id/btn_welcome_continue_with_email")
     private MobileElement welcomeContinueWithEmail;
 
-    @AndroidFindBy(id="com.todoist:id/btn_continue_with_email")
+    @AndroidFindBy(id = "com.todoist:id/btn_continue_with_email")
     private MobileElement continueWithEmail;
 
     @AndroidFindBy(id = "com.todoist:id/email_exists_input")
@@ -47,7 +47,7 @@ public class LoginPage extends AbstractPage {
         return this;
     }
 
-    public HomePage navigateToHomePage(){
+    public HomePage navigateToHomePage() {
         return PageFactoryManager.getHomePage();
     }
 }

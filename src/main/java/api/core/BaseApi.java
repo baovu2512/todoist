@@ -1,5 +1,6 @@
 package api.core;
 
+import utils.Log;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.response.Response;
@@ -32,11 +33,15 @@ public class BaseApi {
                         then().
                         log().ifValidationFails().
                         extract().response();
+        Log.info("Post with API url: " + baseUri + url);
+        Log.info("Response header: " + response.getHeaders().toString());
+        Log.info("Response body: " + response.body().asString());
         return response;
     }
 
-    public Response sendGet(String url) {
 
+    public Response sendGet(String url) {
+        Log.info("Get with API url: " + baseUri + url);
         response =
                 given().
                         spec(req).
@@ -46,6 +51,8 @@ public class BaseApi {
                         then().
                         log().ifValidationFails().
                         extract().response();
+
+        Log.info("Request header: " + response.getHeaders().toString());
         return response;
     }
 
@@ -57,6 +64,7 @@ public class BaseApi {
     }
 
     public Response sendDelete(String url) {
+        Log.info("Delete with API url: " + baseUri + url);
         response =
                 given().
                         spec(req).
@@ -65,6 +73,9 @@ public class BaseApi {
                         then().
                         log().ifValidationFails().
                         extract().response();
+
+
+        Log.info("Request header: " + response.getHeaders().toString());
         return response;
     }
 
