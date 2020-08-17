@@ -1,7 +1,7 @@
-package reportconfig;
+package utils.reportconfig;
 
 import com.relevantcodes.extentreports.LogStatus;
-import core.AbstractTest;
+
 import io.appium.java_client.AppiumDriver;
 import mobile.core.DriverManager;
 import org.openqa.selenium.OutputType;
@@ -10,7 +10,7 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-public class ExtentTestListener extends AbstractTest implements ITestListener {
+public class ExtentTestListener implements ITestListener {
 
     @Override
     public void onStart(ITestContext context) {

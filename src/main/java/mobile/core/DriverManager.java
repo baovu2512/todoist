@@ -9,8 +9,10 @@ import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
+import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import utils.Log;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -57,13 +59,17 @@ public class DriverManager {
     }
 
     public void initialiseDriver(String platform) throws Exception {
-        switch (platform) {
-            case "ANDROID":
-                startAndroidDriver(getService());
-                break;
-            case "IOS":
-                startIosDriver(getService());
-                break;
+        try {
+            switch (platform) {
+                case "ANDROID":
+                    startAndroidDriver(getService());
+                    break;
+                case "IOS":
+                    startIosDriver(getService());
+                    break;
+            }
+        } catch (SessionNotCreatedException exception) {
+            Log.error(exception.getMessage());
         }
     }
 
@@ -80,7 +86,7 @@ public class DriverManager {
         cap.setCapability(MobileCapabilityType.PLATFORM_VERSION, device.getPlatformVersion());
         cap.setCapability(MobileCapabilityType.DEVICE_NAME, device.getUdid());
         cap.setCapability(MobileCapabilityType.APP, APP_PATH);
-        if(!device.getReal()){
+        if (!device.getReal()) {
             cap.setCapability("avd", device.getUdid());
         }
         cap.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, true);

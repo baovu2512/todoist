@@ -2,7 +2,7 @@
 <suite name="Suite" parallel="false">
 
     <listeners>
-        <listener class-name="reportconfig.ExtentTestListener" />
+        <listener class-name="utils.reportconfig.ExtentTestListener" />
     </listeners>
     <test name="Demo test">
         <classes>

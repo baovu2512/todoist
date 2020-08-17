@@ -1,7 +1,9 @@
 package utils;
 
+import com.relevantcodes.extentreports.LogStatus;
 import org.apache.log4j.Logger;
 import org.testng.Reporter;
+import utils.reportconfig.ExtentTestManager;
 
 public class Log {
 
@@ -32,6 +34,12 @@ public class Log {
     // Debug Level Logs
     public static void debug(String message) {
         Log.debug(message);
+    }
+
+    public static void reportLog(String message) {
+        ExtentTestManager.getTest().log(LogStatus.INFO, message);//For extentTest HTML report
+        Log.info("Message: " + message);
+        Reporter.log(message);
     }
 }
 

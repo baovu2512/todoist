@@ -4,6 +4,7 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import mobile.core.AbstractPage;
 import mobile.core.PageFactoryManager;
+import utils.Log;
 
 public class LoginPage extends AbstractPage {
 
@@ -23,26 +24,31 @@ public class LoginPage extends AbstractPage {
     private MobileElement passwordInput;
 
     public LoginPage clickWelComeContinueWithEmail() {
+        Log.reportLog("Click to Continue With Email in Welcome Page");
         clickOnElement(welcomeContinueWithEmail);
         return this;
     }
 
     public LoginPage clickContinueWithEmail() {
+        Log.reportLog("Click to Continue With Email");
         clickOnElement(continueWithEmail);
         return this;
     }
 
     public LoginPage enterEmail(String value) {
+        Log.reportLog("Enter email:" + value);
         sendKeysToElement(emailInput, value);
         return this;
     }
 
     public LoginPage enterPassword(String value) {
+        Log.reportLog("Enter password:" + value);
         sendKeysToElement(passwordInput, value);
         return this;
     }
 
     public LoginPage clickToBtnLogin() {
+        Log.reportLog("Click to Button Login");
         clickOnElement(btnLogin);
         return this;
     }
