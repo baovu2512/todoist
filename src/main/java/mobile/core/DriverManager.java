@@ -78,27 +78,6 @@ public class DriverManager {
 
     public void startAndroidDriver(AppiumDriverLocalService appiumService)
             throws IOException {
-        AppiumDriver<MobileElement> driver = null;
-        AndroidDevice device = TestConfig.getAndroidDevice();
-
-        DesiredCapabilities cap = new DesiredCapabilities();
-        cap.setCapability(CapabilityType.PLATFORM_NAME, "Android");
-        cap.setCapability(MobileCapabilityType.PLATFORM_VERSION, device.getPlatformVersion());
-        cap.setCapability(MobileCapabilityType.DEVICE_NAME, device.getUdid());
-        cap.setCapability(MobileCapabilityType.APP, APP_PATH);
-        if (!device.getReal()) {
-            cap.setCapability("avd", device.getUdid());
-        }
-        cap.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, true);
-        cap.setCapability("systemPort", device.getSystemPort());
-        cap.setCapability("appPackage", "com.todoist");
-        cap.setCapability("appWaitActivity",
-                "com.todoist.activity.HomeActivity,com.todoist.activity.WelcomeActivity");
-        cap.setCapability("appWaitDuration", 60000);
-        cap.setCapability(MobileCapabilityType.NO_RESET, "false");
-
-        driver = new AndroidDriver<MobileElement>(appiumService, cap);
-        setDriver(driver);
     }
 
 }

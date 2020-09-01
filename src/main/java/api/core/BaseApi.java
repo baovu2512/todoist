@@ -13,7 +13,7 @@ public class BaseApi {
     private String token = "bd0de7602793e27c149e4443d1ad1fd94d1098b2";
     private Response response;
     private String baseUri = "https://api.todoist.com/rest/v1";
-    private RequestSpecification req = given().baseUri(baseUri).header("Authorization", "Bearer " + token);
+    private RequestSpecification req = given().baseUri(baseUri).contentType(ContentType.JSON).header("Authorization", "Bearer " + token);
 
     public BaseApi() {
     }
